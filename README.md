@@ -1,5 +1,7 @@
 # Bubbles
 
+[![Build Status](https://travis-ci.org/equivalent/bubbles.svg?branch=master)](https://travis-ci.org/equivalent/bubbles)
+
 Daemonized file uploader that watch a folder and uploads any files files
 to AWS S3. Designed for Raspberry pi zero
 
