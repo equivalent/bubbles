@@ -28,6 +28,10 @@ module Bubbles
       command_queue << self
     end
 
+    def inspect
+      "#<#{self.class.name} source_dir: #{@source_dir}, processing_dir: #{@processing_dir}>"
+    end
+
     private
       attr_reader :processing_dir, :command_queue, :uploader_classes
 

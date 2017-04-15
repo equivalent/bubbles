@@ -90,4 +90,8 @@ RSpec.describe Bubbles::DirWatcher do
       end
     end
   end
+
+  describe '#inspect' do
+    it { expect(subject.inspect).to eq "#<Bubbles::DirWatcher source_dir: #{TestHelpers.dummy_source_dir}, processing_dir: #{TestHelpers.dummy_processing_dir}>" }
+  end
 end
