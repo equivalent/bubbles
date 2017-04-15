@@ -21,6 +21,10 @@ module Bubbles
     })
 
     command_queue << dir_watcher
-    queue.call_next
+
+    loop do
+      command_queue.call_next
+      sleep 1
+    end
   end
 end

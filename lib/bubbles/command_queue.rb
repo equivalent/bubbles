@@ -9,7 +9,7 @@ module Bubbles
     end
 
     def call_next
-      queue.shift.call
+      queue.shift.tap {|c| p c}.call
     end
   end
 end
