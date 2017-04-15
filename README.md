@@ -1,8 +1,10 @@
 # Bubbles
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/bubbles`. To experiment with that code, run `bin/console` for an interactive prompt.
+Daemonized file uploader that watch a folder and uploads any files files
+to AWS S3. Designed for Raspberry pi zero
 
-TODO: Delete this and the text above, and describe your gem
+
+Development in progress
 
 ## Installation
 
