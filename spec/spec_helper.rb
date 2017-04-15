@@ -1,5 +1,7 @@
 require "bundler/setup"
 require "bubbles"
+require 'support/test_helpers'
+require 'irb' # for binding.irb debugging
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
