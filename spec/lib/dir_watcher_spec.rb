@@ -15,20 +15,19 @@ RSpec.describe Bubbles::DirWatcher do
 
   class DummyUploader2 < DummyUploader1; end
 
-  subject do
-    described_class.new({
-      source_dir: source_dir,
-      processing_dir: processing_dir,
-      command_queue: command_queue,
-      uploader_classes: uploader_classes
-    })
-  end
-
+  subject{ described_class.new(config: config, command_queue: command_queue) }
   let(:source_dir)     { TestHelpers.dummy_source_dir }
   let(:processing_dir) { TestHelpers.dummy_processing_dir }
   let(:command_queue)  { [] }
   let(:uploader_classes) { [DummyUploader1, DummyUploader2] }
   let(:bfile_double)   { instance_double(Bubbles::BubbliciousFile) }
+  let(:config) do
+    Bubbles::Config.new.tap do |c|
+      c.source_dir = source_dir
+      c.processing_dir = processing_dir
+      c.uploader_classes = uploader_classes
+    end
+  end
 
   describe '#call' do
     def trigger; subject.call end

@@ -1,12 +1,11 @@
 module Bubbles
   class DirWatcher
+    extend Forwardable
     DestinationIsNotDirectory = Class.new(StandardError)
 
-    def initialize(source_dir:, processing_dir:, command_queue:, uploader_classes:)
-      @source_dir = source_dir
-      @processing_dir = processing_dir
+    def initialize(config:, command_queue:)
+      @config        = config
       @command_queue = command_queue
-      @uploader_classes = uploader_classes
     end
 
     def call
@@ -29,21 +28,12 @@ module Bubbles
     end
 
     def inspect
-      "#<#{self.class.name} source_dir: #{@source_dir}, processing_dir: #{@processing_dir}>"
+      "#<#{self.class.name} source_dir: #{source_dir}, processing_dir: #{processing_dir}>"
     end
 
     private
-      attr_reader :processing_dir, :command_queue, :uploader_classes
-
-      def source_dir
-        Pathname.new(@source_dir)
-      end
-
-      def processing_dir
-        Pathname.new(@processing_dir)
-      end
-
-      def num_of_files_to_schedule; 1 end
+      attr_reader :command_queue, :config
+      def_delegators :config, :source_dir, :processing_dir, :num_of_files_to_schedule, :uploader_classes
 
       def source_dir_files
         Dir
