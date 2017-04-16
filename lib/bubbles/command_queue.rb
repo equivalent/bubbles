@@ -1,5 +1,9 @@
 module Bubbles
   class CommandQueue
+    def initialize(config:)
+      @config = config
+    end
+
     def queue
       @queue ||= []
     end
@@ -17,8 +21,10 @@ module Bubbles
     end
 
     private
+      attr_reader :config
+
       def log(command)
-        Bubbles.logger.debug("Processing: #{command.inspect}")
+        config.logger.debug("Processing: #{command.inspect}")
       end
   end
 end

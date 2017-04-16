@@ -1,8 +1,13 @@
 require 'spec_helper'
 
 RSpec.describe Bubbles::CommandQueue do
-  subject { described_class.new }
+  subject { described_class.new(config: config) }
   let(:command_object) { double 'command_object1' }
+  let(:config) do
+    Bubbles::Config.new.tap do |c|
+      c.log_level = TestHelpers.log_level
+    end
+  end
 
   describe '#queue' do
     it do

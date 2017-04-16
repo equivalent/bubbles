@@ -1,11 +1,16 @@
 require 'spec_helper'
 RSpec.describe Bubbles::Uploaders::LocalDir do
   include_context 'common uploader initialization'
-  let(:command_queue) { Bubbles::CommandQueue.new.tap { |x| x << :already_existing_one } }
+  let(:command_queue) do
+    Bubbles::CommandQueue
+      .new(config: config)
+      .tap { |x| x << :already_existing_one }
+  end
   let(:bfile)    { instance_double(Bubbles::BubbliciousFile, uid_file: uid_file) }
   let(:config) do
     Bubbles::Config.new.tap do |c|
       c.local_dir_uploader_path = TestHelpers.dummy_local_dir_uploader_dir
+      c.log_level = TestHelpers.log_level
     end
   end
 

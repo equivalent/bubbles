@@ -21,7 +21,7 @@ module Bubbles
   end
 
   def run
-    command_queue = Bubbles::CommandQueue.new
+    command_queue = Bubbles::CommandQueue.new(config: config)
 
     command_queue << Bubbles::DirWatcher.new({
       source_dir: config.source_dir,
@@ -34,9 +34,5 @@ module Bubbles
       command_queue.call_next
       sleep config.sleep_interval
     end
-  end
-
-  def logger
-    config.logger
   end
 end

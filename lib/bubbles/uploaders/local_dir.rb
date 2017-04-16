@@ -10,7 +10,7 @@ module Bubbles
       end
 
       def call
-        Bubbles.logger.debug("#{self.class.name}: transfering #{uid_file} to #{local_dir_uploader_path}")
+        config.logger.debug("#{self.class.name}: transfering #{uid_file} to #{local_dir_uploader_path}")
         FileUtils.cp(uid_file, local_dir_uploader_path)
       rescue Errno::ENOENT
         command_queue.reschedule(self)

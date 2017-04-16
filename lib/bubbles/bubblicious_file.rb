@@ -8,12 +8,12 @@ module Bubbles
     end
 
     def move_to_processing_dir
-      Bubbles.logger.debug("BubbliciousFile: moving file #{file} to #{uid_file}")
+      config.logger.debug("BubbliciousFile: moving file #{file} to #{uid_file}")
       FileUtils.mv(file, uid_file)
     end
 
     def remove_file
-      Bubbles.logger.debug("BubbliciousFile: removing file #{uid_file}")
+      config.logger.debug("BubbliciousFile: removing file #{uid_file}")
       FileUtils.rm(uid_file)
     end
 
