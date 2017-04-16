@@ -6,6 +6,12 @@ Daemonized file uploader that watch a folder and uploads any files files
 to AWS S3. Designed for Raspberry pi zero
 
 
+Notes:
+
+
+* for AWS S3 upload we use AWS-SDK [s3 put_object](http://docs.aws.amazon.com/sdkforruby/api/Aws/S3/Client.html#put_object-instance_method) the single file upload should not exceed 5GB.
+I'm not planing to introduce S3 multipart uploads but Pull Requests are welcome.
+
 Development in progress
 
 ## Installation

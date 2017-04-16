@@ -4,6 +4,7 @@ require 'logger'
 require 'securerandom'
 require 'yaml'
 require 'forwardable'
+require 'aws-sdk'
 require "bubbles/version"
 require "bubbles/config"
 require "bubbles/command_queue"

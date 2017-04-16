@@ -2,7 +2,7 @@ module TestHelpers
   extend self
 
   def log_level
-    2
+    4
   end
 
   def dummy_source_dir

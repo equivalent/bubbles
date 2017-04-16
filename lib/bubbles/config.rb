@@ -10,7 +10,8 @@ module Bubbles
 
     attr_writer :config_path, :logger, :source_dir, :processing_dir, :log_path,
       :log_level, :sleep_interval, :uploader_classes, :num_of_files_to_schedule,
-      :uniq_filename_randomizer, :local_dir_uploader_path
+      :uniq_filename_randomizer, :local_dir_uploader_path, :s3_access_key_id, :s3_secret_access_key,
+      :s3_region
 
     def log_path
       @log_path || config_yml['log_path'] || STDOUT
@@ -76,7 +77,29 @@ module Bubbles
       @uniq_filename_randomizer ||= ->() { SecureRandom.uuid }
     end
 
+    def s3_credentials
+      @aws_credentials ||= Aws::Credentials.new(access_key_id, secret_access_key)
+    end
+
     private
+      def s3_access_key_id
+        @s3_access_key_id \
+          || config_yml['s3_access_key_id'] \
+          || raise('Please provide s3_access_key_id in your config file')
+      end
+
+      def s3_secret_access_key
+        @s3_secret_access_key \
+          || config_yml['s3_secret_access_key'] \
+          || raise('Please provide s3_secret_access_key in your config file')
+      end
+
+      def s3_region
+        @s3_region \
+          || config_yml['s3_region'] \
+          || raise('Please provide s3_region in your config file')
+      end
+
       def config_yml
         if config_path
           @config_yml ||= YAML.load_file(config_path)
