@@ -1,0 +1,6 @@
+source_dir: '/tmp/source_dir_via_conig_file'
+processing_dir: '/tmp/processing_dir_via_conig_file'
+log_level: 1
+uploaders:
+  - 'Bubbles::Uploaders::S3'
+  - 'Bubbles::Uploaders::LocalDir'

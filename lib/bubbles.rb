@@ -2,11 +2,15 @@ require 'fileutils'
 require 'pathname'
 require 'logger'
 require 'securerandom'
+require 'yaml'
 require "bubbles/version"
 require "bubbles/config"
 require "bubbles/command_queue"
 require "bubbles/bubblicious_file"
 require "bubbles/dir_watcher"
+require "bubbles/uploaders/s3"
+require "bubbles/uploaders/local_dir"
+
 
 module Bubbles
   extend self

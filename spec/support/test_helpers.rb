@@ -5,6 +5,14 @@ module TestHelpers
     File.expand_path('dummy_source_dir', __dir__).to_s
   end
 
+  def dummy_config1
+    File.expand_path('dummy_config1.yml', __dir__).to_s
+  end
+
+  def dummy_config2
+    File.expand_path('dummy_config2.yml', __dir__).to_s
+  end
+
   def dummy_processing_dir
     File.expand_path('../../tmp/dummy_processing_dir', __dir__).to_s
   end
