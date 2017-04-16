@@ -14,6 +14,7 @@ module Bubbles
 
     def remove_file
       Bubbles.logger.debug("BubbliciousFile: removing file #{uid_file}")
+      FileUtils.rm(uid_file)
     end
 
     def metadata

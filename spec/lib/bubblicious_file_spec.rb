@@ -38,4 +38,16 @@ RSpec.describe Bubbles::BubbliciousFile do
       })
     end
   end
+
+  describe '#remove_file' do
+    def trigger; subject.remove_file end
+
+    it 'remove uuid file from processing dir' do
+      expect(FileUtils)
+        .to receive(:rm)
+        .once
+        .with(expected_uid_file_path)
+      trigger
+    end
+  end
 end
