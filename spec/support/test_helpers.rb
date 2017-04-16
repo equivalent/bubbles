@@ -1,6 +1,10 @@
 module TestHelpers
   extend self
 
+  def log_level
+    2
+  end
+
   def dummy_source_dir
     File.expand_path('dummy_source_dir', __dir__).to_s
   end

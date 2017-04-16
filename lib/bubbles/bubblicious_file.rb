@@ -1,15 +1,15 @@
 module Bubbles
   class BubbliciousFile
-    attr_reader :randomizer
+    extend Forwardable
 
-    def initialize(file:, processing_dir:, randomizer: ->(){SecureRandom.uuid})
-      @file = file
-      @processing_dir = processing_dir
-      @randomizer = randomizer
+    def initialize(file:, config:)
+      @file   = file
+      @config = config
     end
 
     def move_to_processing_dir
       Bubbles.logger.debug("BubbliciousFile: moving file #{file} to #{uid_file}")
+      FileUtils.mv(file, uid_file)
     end
 
     def remove_file
@@ -21,12 +21,15 @@ module Bubbles
     end
 
     private
+      attr_reader :config
+      def_delegators :config, :uniq_filename_randomizer, :processing_dir
+
       def uid_file
-        Pathname.new(processing_dir)
+        Pathname.new(processing_dir).join(uid_file_name)
       end
 
       def uid_file_name
-        @uid_file_name ||= "#{randomizer.call}.#{file.extname}"
+        @uid_file_name ||= "#{uniq_filename_randomizer.call}#{file.extname}"
       end
 
       def file

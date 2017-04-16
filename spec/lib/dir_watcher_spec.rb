@@ -37,7 +37,7 @@ RSpec.describe Bubbles::DirWatcher do
 
       expect(Bubbles::BubbliciousFile)
         .to receive(:new)
-        .with(file: TestHelpers.dummy_file_test2, processing_dir: Pathname.new(processing_dir))
+        .with(file: TestHelpers.dummy_file_test2, config: config)
         .and_return(bfile_double)
       expect(bfile_double)
         .to receive(:move_to_processing_dir)

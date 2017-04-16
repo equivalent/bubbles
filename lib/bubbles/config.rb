@@ -9,7 +9,8 @@ module Bubbles
     end
 
     attr_writer :config_path, :logger, :source_dir, :processing_dir, :log_path,
-      :log_level, :sleep_interval, :uploader_classes, :num_of_files_to_schedule
+      :log_level, :sleep_interval, :uploader_classes, :num_of_files_to_schedule,
+      :uniq_filename_randomizer
 
     def log_path
       @log_path || config_yml['log_path'] || STDOUT
@@ -61,6 +62,10 @@ module Bubbles
       elsif File.exist?(self.class.home_config)
         self.class.home_config
       end
+    end
+
+    def uniq_filename_randomizer
+      @uniq_filename_randomizer ||= ->() { SecureRandom.uuid }
     end
 
     private

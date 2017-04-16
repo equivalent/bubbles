@@ -14,7 +14,7 @@ module Bubbles
 
       source_dir_files
         .each do |file|
-          bfile = BubbliciousFile.new(file: file, processing_dir: processing_dir)
+          bfile = BubbliciousFile.new(file: file, config: config)
           bfile.move_to_processing_dir
 
           uploader_classes.each do |uploader_class|
