@@ -1,7 +1,7 @@
 require 'spec_helper'
 RSpec.describe Bubbles::Uploaders::LocalDir do
   include_context 'common uploader initialization'
-  let(:command_queue) { [:already_existing_one] }
+  let(:command_queue) { Bubbles::CommandQueue.new.tap { |x| x << :already_existing_one } }
   let(:bfile)    { instance_double(Bubbles::BubbliciousFile, uid_file: uid_file) }
   let(:config) do
     Bubbles::Config.new.tap do |c|
@@ -11,10 +11,6 @@ RSpec.describe Bubbles::Uploaders::LocalDir do
 
   describe '#call' do
     def trigger; subject.call end
-
-    context 'directory is added' do
-
-    end
 
     context 'successful file transfer' do
       let(:uid_file) do
@@ -39,7 +35,18 @@ RSpec.describe Bubbles::Uploaders::LocalDir do
       end
 
       it 'should not reschedule' do
-        expect { trigger }.not_to change { command_queue.size }
+        expect { trigger }.not_to change { command_queue.queue.size }
+      end
+    end
+
+    context 'unseccessful file transfer' do
+      let(:uid_file) do
+        TestHelpers.dummy_file_test1_processing_dir
+      end
+
+      it 'should reschedule in front of command_queue' do
+        expect { trigger }.to change { command_queue.queue.size }
+        expect(command_queue.queue.first).to eq subject
       end
     end
   end

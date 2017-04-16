@@ -15,7 +15,20 @@ RSpec.describe Bubbles::CommandQueue do
 
     it 'shauld add object to queue' do
       trigger
-      expect(subject.queue).to include(command_object)
+      expect(subject.queue).to eq([command_object])
+    end
+
+    context 'already existing command in the queue' do
+      let(:existing_command) { double(:existing_command) }
+
+      before do
+        subject << existing_command
+      end
+
+      it 'should add to the end of queue' do
+        trigger
+        expect(subject.queue).to eq([existing_command, command_object])
+      end
     end
   end
 
@@ -40,6 +53,21 @@ RSpec.describe Bubbles::CommandQueue do
         expect(command_object2).to receive(:call).with(no_args).once
         2.times { trigger }
       end
+    end
+  end
+
+  describe '#reschedule' do
+    def trigger; subject.reschedule command_object end
+    let(:existing_command) { double(:existing_command) }
+
+    before do
+      subject << existing_command
+    end
+
+    it 'should add object to the front of the queue' do
+      expect(subject.queue).to eq([existing_command])
+      trigger
+      expect(subject.queue).to eq([command_object, existing_command])
     end
   end
 end

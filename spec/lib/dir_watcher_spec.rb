@@ -29,6 +29,14 @@ RSpec.describe Bubbles::DirWatcher do
     end
   end
 
+  describe '#source_dir_files' do
+    let(:result) { subject.source_dir_files }
+    it 'expect to enlist folders only' do
+      expect(result.size).to be 2
+      expect(result).to match_array([/test1\.jpg/, /test2\.png/])
+    end
+  end
+
   describe '#call' do
     def trigger; subject.call end
 

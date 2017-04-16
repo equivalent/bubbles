@@ -13,6 +13,7 @@ module Bubbles
       check_processing_dir_existence
 
       source_dir_files
+        .last(num_of_files_to_schedule)
         .each do |file|
           bfile = BubbliciousFile.new(file: file, config: config)
           bfile.move_to_processing_dir
@@ -31,15 +32,15 @@ module Bubbles
       "#<#{self.class.name} source_dir: #{source_dir}, processing_dir: #{processing_dir}>"
     end
 
+    def source_dir_files
+      Dir
+        .glob(source_dir.join('**/*').to_s)
+        .select { |x| Pathname.new(x).file? }
+    end
+
     private
       attr_reader :command_queue, :config
       def_delegators :config, :source_dir, :processing_dir, :num_of_files_to_schedule, :uploader_classes
-
-      def source_dir_files
-        Dir
-          .glob(source_dir.join('**/*').to_s)
-          .last(num_of_files_to_schedule)
-      end
 
       def check_source_dir_existence
         raise DestinationIsNotDirectory unless source_dir.directory?

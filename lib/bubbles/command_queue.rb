@@ -12,6 +12,10 @@ module Bubbles
       queue.shift.tap {|c| log c}.call
     end
 
+    def reschedule(command_object)
+      queue.unshift(command_object)
+    end
+
     private
       def log(command)
         Bubbles.logger.debug("Processing: #{command.inspect}")
