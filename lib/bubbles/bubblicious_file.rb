@@ -17,7 +17,7 @@ module Bubbles
     end
 
     def metadata
-      { original_name: file.basename }
+      { original_name: file.basename.to_s }
     end
 
     private
