@@ -1,7 +1,7 @@
 module Bubbles
   module Uploaders
     class S3
-      def initialize
+      def initialize(bfile, command_queue, config)
 
       end
     end

@@ -21,11 +21,28 @@ module TestHelpers
     File.expand_path('../../tmp/dummy_processing_dir', __dir__).to_s
   end
 
+  def dummy_local_dir_uploader_dir
+    File.expand_path('../../tmp/dummy_local_dir_uploader_dir', __dir__).to_s
+  end
+
   def dummy_file_test1
     Pathname.new(dummy_source_dir).join('test1.jpg').to_s
   end
 
+  def dummy_file_test1_processing_dir
+    Pathname.new(dummy_processing_dir).join('test1.jpg').to_s
+  end
+
   def dummy_file_test2
     Pathname.new(dummy_source_dir).join('test2.png').to_s
+  end
+
+  def clean_temp_folders
+    Dir
+      .glob(dummy_local_dir_uploader_dir + '/**/*')
+      .each { |x| FileUtils.rm(x) }
+    Dir
+      .glob(dummy_processing_dir + '/**/*')
+      .each { |x| FileUtils.rm(x) }
   end
 end

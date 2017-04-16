@@ -10,7 +10,7 @@ module Bubbles
 
     attr_writer :config_path, :logger, :source_dir, :processing_dir, :log_path,
       :log_level, :sleep_interval, :uploader_classes, :num_of_files_to_schedule,
-      :uniq_filename_randomizer
+      :uniq_filename_randomizer, :local_dir_uploader_path
 
     def log_path
       @log_path || config_yml['log_path'] || STDOUT
@@ -41,6 +41,14 @@ module Bubbles
       else
         [Bubbles::Uploaders::S3]
       end
+    end
+
+    def local_dir_uploader_path
+      err_msg = 'As you are using LocalDir uploader,' +
+        ' you need to specify `local_dir_uploader_path` in your config' +
+        ' so the uploader knows where to upload'
+      @local_dir_uploader_path ||= config_yml.fetch('local_dir_uploader_path') { raise err_msg }
+      pathnamed(@local_dir_uploader_path)
     end
 
     # number of seconds between every command execution in queue seconds, defaults to 1

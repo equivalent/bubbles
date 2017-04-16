@@ -10,4 +10,16 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
+
+  config.before(:suite) do
+    TestHelpers.clean_temp_folders
+  end
+
+  config.after(:each) do
+    TestHelpers.clean_temp_folders
+  end
+end
+
+RSpec.shared_context 'common uploader initialization' do
+  subject { described_class.new(config: config, bfile: bfile, command_queue: command_queue) }
 end

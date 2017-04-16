@@ -21,13 +21,13 @@ module Bubbles
       { original_name: file.basename.to_s }
     end
 
+    def uid_file
+      Pathname.new(processing_dir).join(uid_file_name)
+    end
+
     private
       attr_reader :config
       def_delegators :config, :uniq_filename_randomizer, :processing_dir
-
-      def uid_file
-        Pathname.new(processing_dir).join(uid_file_name)
-      end
 
       def uid_file_name
         @uid_file_name ||= "#{uniq_filename_randomizer.call}#{file.extname}"
