@@ -19,7 +19,7 @@ module Bubbles
           bfile.move_to_processing_dir
 
           uploader_classes.each do |uploader_class|
-            command_queue << uploader_class.new(bfile: bfile)
+            command_queue << uploader_class.new(bfile: bfile, command_queue: command_queue, config: config)
           end
 
           command_queue << bfile.public_method(:remove_file)

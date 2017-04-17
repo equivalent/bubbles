@@ -2,11 +2,7 @@ require 'spec_helper'
 
 RSpec.describe Bubbles::DirWatcher do
   class DummyUploader1
-    attr_reader :bfile
-
-    def initialize(bfile:)
-      @bfile = bfile
-    end
+    include Bubbles::CommonUploaderInterface
 
     def ==(other)
       self.class == other.class && self.bfile == other.bfile
@@ -59,8 +55,11 @@ RSpec.describe Bubbles::DirWatcher do
       trigger
       expect(command_queue.size).to eq 4
 
-      expect(command_queue.shift).to eq DummyUploader1.new(bfile: bfile_double)
-      expect(command_queue.shift).to eq DummyUploader2.new(bfile: bfile_double)
+      dummy_uploader1 = DummyUploader1.new(bfile: bfile_double, config: config, command_queue: command_queue)
+      expect(command_queue.shift).to eq dummy_uploader1
+
+      dummy_uploader2 = DummyUploader2.new(bfile: bfile_double, config: config, command_queue: command_queue)
+      expect(command_queue.shift).to eq dummy_uploader2
       expect(command_queue.shift).to eq destroyer_object
       expect(command_queue.shift).to eq subject
     end
