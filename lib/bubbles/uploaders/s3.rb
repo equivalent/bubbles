@@ -2,12 +2,7 @@ module Bubbles
   module Uploaders
     class S3
       extend Forwardable
-
-      def initialize(bfile:, command_queue:, config:)
-        @bfile  = bfile
-        @config = config
-        @command_queue = command_queue
-      end
+      include Bubbles::CommonUploaderInterface
 
       def call
         File.open(uid_file, 'rb') do |file|
@@ -19,7 +14,6 @@ module Bubbles
       end
 
       private
-        attr_reader :config, :command_queue, :bfile
         def_delegators :config, :s3_bucket, :s3_path, :s3_credentials, :s3_region
         def_delegators :bfile, :uid_file, :uid_file_name
 

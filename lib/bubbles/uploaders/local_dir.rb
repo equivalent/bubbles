@@ -2,12 +2,7 @@ module Bubbles
   module Uploaders
     class LocalDir
       extend Forwardable
-
-      def initialize(bfile:, command_queue:, config:)
-        @bfile  = bfile
-        @config = config
-        @command_queue = command_queue
-      end
+      include Bubbles::CommonUploaderInterface
 
       def call
         config.logger.debug("#{self.class.name}: transfering #{uid_file} to #{local_dir_uploader_path}")
@@ -18,7 +13,6 @@ module Bubbles
       end
 
       private
-        attr_reader :config, :command_queue, :bfile
         def_delegators :config, :local_dir_uploader_path
         def_delegators :bfile, :uid_file
     end
