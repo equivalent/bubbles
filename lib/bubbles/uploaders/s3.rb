@@ -11,16 +11,12 @@ module Bubbles
 
       def call
         File.open(uid_file, 'rb') do |file|
-          s3.put_object(key: uid_file_name, body: file)
+          s3.put_object(bucket: s3_bucket, key: s3_full_path, body: file)
         end
+      rescue => e
+        config.logger.error("#{e.message}")
+        command_queue.reschedule(self)
       end
-      #def call
-        #config.logger.debug("#{self.class.name}: transfering #{uid_file} to #{local_dir_uploader_path}")
-        #FileUtils.cp(uid_file, local_dir_uploader_path)
-      #rescue Errno::ENOENT => e
-        #config.logger.error("#{e.message}")
-        #command_queue.reschedule(self)
-      #end
 
       private
         attr_reader :config, :command_queue, :bfile
@@ -32,6 +28,10 @@ module Bubbles
             region: s3_region,
             credentials: s3_credentials
           })
+        end
+
+        def s3_full_path
+          Pathname.new(s3_path).join(uid_file_name).to_s
         end
     end
   end
