@@ -12,7 +12,6 @@ RSpec.describe Bubbles::Uploaders::S3 do
 
   let(:config) do
     Bubbles::Config.new.tap do |c|
-      c.local_dir_uploader_path = TestHelpers.dummy_local_dir_uploader_dir
       c.s3_region = 'eu-west-1'
       c.s3_bucket = 'mybckt'
       c.s3_access_key_id     = 'xxxxxxxxxxx'

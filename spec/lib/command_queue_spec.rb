@@ -41,22 +41,30 @@ RSpec.describe Bubbles::CommandQueue do
     def trigger; subject.call_next end
     let(:command_object2) { double  'command_object2' }
 
-    before do
-      subject << command_object
-      subject << command_object2
+    context 'nothing in the queue' do
+      it do
+        expect { trigger }.not_to raise_exception
+      end
     end
 
-    it do
-      expect(command_object).to receive(:call).with(no_args).once
-      expect(command_object2).not_to receive(:call)
-      trigger
-    end
+    context 'something in the queue' do
+      before do
+        subject << command_object
+        subject << command_object2
+      end
 
-    context 'run twice' do
       it do
         expect(command_object).to receive(:call).with(no_args).once
-        expect(command_object2).to receive(:call).with(no_args).once
-        2.times { trigger }
+        expect(command_object2).not_to receive(:call)
+        trigger
+      end
+
+      context 'run twice' do
+        it do
+          expect(command_object).to receive(:call).with(no_args).once
+          expect(command_object2).to receive(:call).with(no_args).once
+          2.times { trigger }
+        end
       end
     end
   end

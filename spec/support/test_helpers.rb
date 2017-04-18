@@ -9,6 +9,19 @@ module TestHelpers
     File.expand_path('dummy_source_dir', __dir__).to_s
   end
 
+  def dummy_temporary_source_dir
+    File.expand_path('../../tmp/dummy_temporary_source_dir', __dir__).to_s
+  end
+
+  def dummy_temporary_source_dir_init
+    FileUtils.mkdir dummy_temporary_source_dir
+    FileUtils.cp dummy_file_test1, dummy_temporary_source_dir
+  end
+
+  def dummy_temporary_source_dir_termination
+    FileUtils.rm_rf dummy_temporary_source_dir
+  end
+
   def dummy_config1
     File.expand_path('dummy_config1.yml', __dir__).to_s
   end

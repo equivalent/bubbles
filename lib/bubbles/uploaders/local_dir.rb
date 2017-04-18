@@ -12,6 +12,10 @@ module Bubbles
         command_queue.reschedule(self)
       end
 
+      def inspect
+        "<##{self.class.name} uid_file: #{uid_file} to: #{local_dir_uploader_path}>"
+      end
+
       private
         def_delegators :config, :local_dir_uploader_path
         def_delegators :bfile, :uid_file

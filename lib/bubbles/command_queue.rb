@@ -1,5 +1,9 @@
 module Bubbles
   class CommandQueue
+    extend Forwardable
+
+    def_delegators :queue, :size
+
     def initialize(config:)
       @config = config
     end
@@ -13,11 +17,20 @@ module Bubbles
     end
 
     def call_next
-      queue.shift.tap {|c| log c}.call
+      if command = queue.shift
+        log command
+        command.call
+      else
+        log "Nothing in the command queue"
+      end
     end
 
     def reschedule(command_object)
       queue.unshift(command_object)
+    end
+
+    def inspect
+      "<##{self.class.name} queue:#{queue.inspect} >"
     end
 
     private

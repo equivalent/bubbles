@@ -25,10 +25,8 @@ module Bubbles
     command_queue = Bubbles::CommandQueue.new(config: config)
 
     command_queue << Bubbles::DirWatcher.new({
-      source_dir: config.source_dir,
-      processing_dir: config.processing_dir,
-      command_queue: command_queue,
-      uploader_classes: config.uploader_classes,
+      config: config,
+      command_queue: command_queue
     })
 
     loop do

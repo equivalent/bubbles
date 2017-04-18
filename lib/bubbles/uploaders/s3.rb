@@ -13,6 +13,10 @@ module Bubbles
         command_queue.reschedule(self)
       end
 
+      def inspect
+        "<##{self.class.name} uid_file: #{uid_file} to: s3://#{s3_bucket}#{s3_full_path}>"
+      end
+
       private
         def_delegators :config, :s3_bucket, :s3_path, :s3_credentials, :s3_region
         def_delegators :bfile, :uid_file, :uid_file_name
