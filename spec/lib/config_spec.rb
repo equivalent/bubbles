@@ -129,7 +129,7 @@ RSpec.describe Bubbles::Config do
 
       it 'it is STDOUT logger with log level :debug' do
         expect(result).to be_kind_of(Logger)
-        expect(result.level).to eq 0 # 0 represents debug
+        expect(result.level).to eq :debug # 0 represents debug
       end
     end
 
