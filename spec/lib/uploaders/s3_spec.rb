@@ -12,6 +12,7 @@ RSpec.describe Bubbles::Uploaders::S3 do
 
   let(:config) do
     Bubbles::Config.new.tap do |c|
+      c.use_default_config_locations = false
       c.s3_region = 'eu-west-1'
       c.s3_bucket = 'mybckt'
       c.s3_access_key_id     = 'xxxxxxxxxxx'
@@ -34,7 +35,7 @@ RSpec.describe Bubbles::Uploaders::S3 do
 
         expect(s3_double)
           .to receive(:put_object)
-          .with(bucket: 'mybckt', key: '/test.jpg', body: be_kind_of(File))
+          .with(bucket: 'mybckt', key: 'test.jpg', body: be_kind_of(File))
           .and_return(true)
       end
 

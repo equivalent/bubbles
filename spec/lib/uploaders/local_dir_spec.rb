@@ -7,6 +7,7 @@ RSpec.describe Bubbles::Uploaders::LocalDir do
   let(:bfile)    { instance_double(Bubbles::BubbliciousFile, uid_file: uid_file) }
   let(:config) do
     Bubbles::Config.new.tap do |c|
+      c.use_default_config_locations = false
       c.local_dir_uploader_path = TestHelpers.dummy_local_dir_uploader_dir
       c.log_level = TestHelpers.log_level
     end

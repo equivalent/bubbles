@@ -5,6 +5,7 @@ RSpec.describe Bubbles::CommandQueue do
   let(:command_object) { double 'command_object1' }
   let(:config) do
     Bubbles::Config.new.tap do |c|
+      c.use_default_config_locations = false
       c.log_level = TestHelpers.log_level
     end
   end

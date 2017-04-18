@@ -3,6 +3,10 @@ require 'spec_helper'
 RSpec.describe Bubbles::Config do
   subject { described_class.new }
 
+  before do
+    subject.use_default_config_locations = false
+  end
+
   shared_context 'use dummy config1' do
     before { subject.config_path = TestHelpers.dummy_config1 }
   end
@@ -43,6 +47,14 @@ RSpec.describe Bubbles::Config do
     end
 
     context 'config_path was not passed via attr_writer' do
+      before(:each) do
+        subject.use_default_config_locations = true
+      end
+
+      after(:each) do
+        subject.use_default_config_locations = false
+      end
+
       context 'var config exists' do
         before do
           expect(described_class).to receive(:var_config).twice.and_return TestHelpers.dummy_config1

@@ -1,3 +1,4 @@
+TEST_RUN = true
 require "bundler/setup"
 require "bubbles"
 require 'support/test_helpers'

@@ -11,7 +11,7 @@ module Bubbles
     attr_writer :config_path, :logger, :source_dir, :processing_dir, :log_path,
       :log_level, :sleep_interval, :uploader_classes, :num_of_files_to_schedule,
       :uniq_filename_randomizer, :local_dir_uploader_path, :s3_access_key_id, :s3_secret_access_key,
-      :s3_region, :s3_path, :s3_bucket
+      :s3_region, :s3_path, :s3_bucket, :use_default_config_locations
 
     def log_path
       @log_path || config_yml['log_path'] || STDOUT
@@ -66,9 +66,9 @@ module Bubbles
       if @config_path
         raise "Config file #{@config_path} does not exist" unless File.exist?(@config_path)
         @config_path
-      elsif File.exist?(self.class.var_config)
+      elsif File.exist?(self.class.var_config) && use_default_config_locations
         self.class.var_config
-      elsif File.exist?(self.class.home_config)
+      elsif File.exist?(self.class.home_config) && use_default_config_locations
         self.class.home_config
       end
     end
@@ -90,7 +90,7 @@ module Bubbles
     def s3_path
       @s3_path \
         || config_yml['s3_path'] \
-        || '/'
+        || ''
     end
 
     def s3_bucket
@@ -100,6 +100,11 @@ module Bubbles
     end
 
     private
+      def use_default_config_locations
+        return @use_default_config_locations unless @use_default_config_locations.nil?
+        true
+      end
+
       def s3_access_key_id
         @s3_access_key_id \
           || config_yml['s3_access_key_id'] \

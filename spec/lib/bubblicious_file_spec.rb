@@ -10,6 +10,7 @@ RSpec.describe Bubbles::BubbliciousFile do
 
   let(:config) do
     Bubbles::Config.new.tap do |c|
+      c.use_default_config_locations = false
       c.source_dir = source_dir
       c.processing_dir = processing_dir
       c.log_level      = TestHelpers.log_level

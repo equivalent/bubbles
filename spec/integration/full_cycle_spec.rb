@@ -2,6 +2,7 @@ require 'spec_helper'
 describe 'full cycle' do
   let(:config) do
     Bubbles::Config.new.tap do |c|
+      c.use_default_config_locations = false
       c.log_level = TestHelpers.log_level
       c.source_dir = TestHelpers.dummy_temporary_source_dir
       c.processing_dir = TestHelpers.dummy_processing_dir

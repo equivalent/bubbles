@@ -19,6 +19,7 @@ RSpec.describe Bubbles::DirWatcher do
   let(:bfile_double)   { instance_double(Bubbles::BubbliciousFile) }
   let(:config) do
     Bubbles::Config.new.tap do |c|
+      c.use_default_config_locations = false
       c.source_dir = source_dir
       c.processing_dir = processing_dir
       c.uploader_classes = uploader_classes
