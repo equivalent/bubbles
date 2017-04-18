@@ -7,6 +7,7 @@ Gem::Specification.new do |spec|
   spec.name          = "bubbles"
   spec.version       = Bubbles::VERSION
   spec.authors       = ["Tomas Valent"]
+  spec.licenses      = ['MIT']
   spec.email         = ["equivalent@eq8.eu"]
 
   spec.summary       = %q{Lightweight daemon file uploader to cloud}
