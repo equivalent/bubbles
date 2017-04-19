@@ -75,6 +75,7 @@ s3_secret_access_key: yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
 s3_bucket: bucket_name
 s3_region: eu-west-1
 s3_path: foo_folder/bar_folder/car_folder          # will upload to s3://bucket/foo_folder/bar_folder/car_folder
+s3_acl: private                                    # # accepts private, public-read, public-read-write, authenticated-read, aws-exec-read, bucket-owner-read, bucket-owner-full-control
 
 local_dir_uploader_path: /mnt/network_smb_storage
 ```
