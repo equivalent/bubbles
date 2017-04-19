@@ -35,7 +35,7 @@ RSpec.describe Bubbles::Uploaders::S3 do
 
         expect(s3_double)
           .to receive(:put_object)
-          .with(bucket: 'mybckt', key: 'test.jpg', body: be_kind_of(File))
+          .with(bucket: 'mybckt', key: 'test.jpg', body: be_kind_of(File), acl: 'private')
           .and_return(true)
       end
 

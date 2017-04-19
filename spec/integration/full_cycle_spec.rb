@@ -80,7 +80,7 @@ describe 'full cycle' do
 
     expect(s3_double)
       .to receive(:put_object)
-      .with(bucket: 'mybckt', key: /\w*-\w*-\w*-\w*-\w*\.jpg/, body: be_kind_of(File))
+      .with(bucket: 'mybckt', key: /\w*-\w*-\w*-\w*-\w*\.jpg/, body: be_kind_of(File), acl: 'private')
       .and_return(true)
   end
 

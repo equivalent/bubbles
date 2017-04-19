@@ -6,7 +6,7 @@ module Bubbles
 
       def call
         File.open(uid_file, 'rb') do |file|
-          s3.put_object(bucket: s3_bucket, key: s3_full_path, body: file)
+          s3.put_object(bucket: s3_bucket, key: s3_full_path, body: file, acl: config.s3_acl)
         end
       rescue => e
         config.logger.error("#{e.message}")

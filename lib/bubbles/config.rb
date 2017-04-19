@@ -54,7 +54,9 @@ module Bubbles
 
     # number of seconds between every command execution in queue seconds, defaults to 1
     def sleep_interval
-      @sleep_interval || 1
+      @sleep_interval \
+        || config_yml['sleep_interval'] \
+        || 1
     end
 
     # how many files should DirWatcher schedule for upload, defaults to 1
@@ -91,6 +93,12 @@ module Bubbles
       @s3_path \
         || config_yml['s3_path'] \
         || ''
+    end
+
+    def s3_acl
+      @s3_acl \
+        || config_yml['s3_acl'] \
+        || 'private'
     end
 
     def s3_bucket
