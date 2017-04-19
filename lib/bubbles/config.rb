@@ -18,7 +18,7 @@ module Bubbles
     end
 
     def log_level
-      @log_level || config_yml['log_level'] || :debug
+      @log_level || config_yml['log_level'] || 0
     end
 
     def logger
