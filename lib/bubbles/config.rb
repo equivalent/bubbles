@@ -11,7 +11,7 @@ module Bubbles
     attr_writer :config_path, :logger, :source_dir, :processing_dir, :log_path,
       :log_level, :sleep_interval, :uploader_classes, :num_of_files_to_schedule,
       :uniq_filename_randomizer, :local_dir_uploader_path, :s3_access_key_id, :s3_secret_access_key,
-      :s3_region, :s3_path, :s3_bucket, :use_default_config_locations
+      :s3_region, :s3_path, :s3_bucket, :use_default_config_locations, :local_dir_metadata_file_path
 
     def log_path
       @log_path || config_yml['log_path'] || STDOUT
@@ -42,6 +42,11 @@ module Bubbles
       else
         [Bubbles::Uploaders::S3]
       end
+    end
+
+    def local_dir_metadata_file_path
+      err_msg = 'You need to set `local_dir_metadata_file_path`'
+      @local_dir_metadata_file_path ||= config_yml.fetch('local_dir_metadata_file_path') { raise err_msg }
     end
 
     def local_dir_uploader_path

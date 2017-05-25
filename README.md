@@ -78,6 +78,7 @@ s3_path: foo_folder/bar_folder/car_folder          # will upload to s3://bucket/
 s3_acl: private                                    # # accepts private, public-read, public-read-write, authenticated-read, aws-exec-read, bucket-owner-read, bucket-owner-full-control
 
 local_dir_uploader_path: /mnt/network_smb_storage
+local_dir_metadata_file_path /var/log/uploads_metadata.yaml
 ```
 
 > Look into [lib/bubbles/config.rb](https://github.com/equivalent/bubbles/blob/master/lib/bubbles/config.rb) for more details.

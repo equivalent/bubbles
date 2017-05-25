@@ -38,6 +38,10 @@ module TestHelpers
     File.expand_path('../../tmp/dummy_local_dir_uploader_dir', __dir__).to_s
   end
 
+  def dummy_local_dir_metadata_file_path
+    File.expand_path('../../tmp/dummy_local_dir_metadata_file.yaml', __dir__).to_s
+  end
+
   def dummy_file_test1
     Pathname.new(dummy_source_dir).join('test1.jpg').to_s
   end
@@ -57,5 +61,6 @@ module TestHelpers
     Dir
       .glob(dummy_processing_dir + '/**/*')
       .each { |x| FileUtils.rm(x) }
+    FileUtils.rm(dummy_local_dir_metadata_file_path) if File.exist?(dummy_local_dir_metadata_file_path)
   end
 end

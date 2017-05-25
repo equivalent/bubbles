@@ -4,11 +4,19 @@ RSpec.describe Bubbles::Uploaders::LocalDir do
   include_context 'common uploader command_queue setup'
 
 
-  let(:bfile)    { instance_double(Bubbles::BubbliciousFile, uid_file: uid_file) }
+  let(:uid_file_name) { 'xxxxxxxxx.jpg' }
+  let(:bfile) do
+    instance_double(Bubbles::BubbliciousFile,
+                    uid_file: uid_file,
+                    uid_file_name: uid_file_name,
+                    metadata: {original_name: 'test1.jpg'})
+  end
+
   let(:config) do
     Bubbles::Config.new.tap do |c|
       c.use_default_config_locations = false
       c.local_dir_uploader_path = TestHelpers.dummy_local_dir_uploader_dir
+      c.local_dir_metadata_file_path = TestHelpers.dummy_local_dir_metadata_file_path
       c.log_level = TestHelpers.log_level
     end
   end
@@ -33,6 +41,13 @@ RSpec.describe Bubbles::Uploaders::LocalDir do
 
       it 'should not reschedule' do
         expect { trigger }.not_to change { command_queue.queue.size }
+      end
+
+      it 'it should write to metadata file' do
+        trigger
+        metadata_file = File.read(TestHelpers.dummy_local_dir_metadata_file_path)
+
+        expect(metadata_file).to eq "-\n  key: xxxxxxxxx.jpg\n  path: /home/t/git/equivalent/bubbles/tmp/dummy_processing_dir/test1.jpg\n  metadata: {\"original_name\":\"test1.jpg\"}\n"
       end
     end
 

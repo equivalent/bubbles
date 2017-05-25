@@ -3,6 +3,7 @@ require 'pathname'
 require 'logger'
 require 'securerandom'
 require 'yaml'
+require 'json'
 require 'forwardable'
 require 'aws-sdk'
 require "bubbles/version"
