@@ -6,7 +6,7 @@ module Bubbles
 
       def call
         File.open(uid_file, 'rb') do |file|
-          s3.put_object(bucket: s3_bucket, key: s3_full_path, body: file, acl: config.s3_acl)
+          s3.put_object(bucket: s3_bucket, key: s3_full_path, body: file, acl: config.s3_acl, metadata: metadata)
         end
       rescue => e
         config.logger.error("#{e.message}")
@@ -19,7 +19,7 @@ module Bubbles
 
       private
         def_delegators :config, :s3_bucket, :s3_path, :s3_credentials, :s3_region
-        def_delegators :bfile, :uid_file, :uid_file_name
+        def_delegators :bfile, :uid_file, :uid_file_name, :metadata
 
         def s3
           @s3 ||= Aws::S3::Client.new({

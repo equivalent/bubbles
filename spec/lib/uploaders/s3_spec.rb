@@ -7,7 +7,8 @@ RSpec.describe Bubbles::Uploaders::S3 do
   let(:bfile)  do
     instance_double Bubbles::BubbliciousFile,
       uid_file: uid_file,
-      uid_file_name: uid_file_name
+      uid_file_name: uid_file_name,
+      metadata: {:original_name=>"test1.jpg"}
   end
 
   let(:config) do
@@ -35,7 +36,7 @@ RSpec.describe Bubbles::Uploaders::S3 do
 
         expect(s3_double)
           .to receive(:put_object)
-          .with(bucket: 'mybckt', key: 'test.jpg', body: be_kind_of(File), acl: 'private')
+          .with(bucket: 'mybckt', key: 'test.jpg', body: be_kind_of(File), acl: 'private', metadata: {:original_name=>"test1.jpg"})
           .and_return(true)
       end
 
