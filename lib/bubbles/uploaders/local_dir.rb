@@ -31,7 +31,6 @@ module Bubbles
 <<EOF
 -
   key: #{uid_file_name}
-  path: #{uid_file}
   metadata: #{metadata.to_json}
 EOF
         end

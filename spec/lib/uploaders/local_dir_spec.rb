@@ -47,7 +47,7 @@ RSpec.describe Bubbles::Uploaders::LocalDir do
         trigger
         metadata_file = File.read(TestHelpers.dummy_local_dir_metadata_file_path)
 
-        expect(metadata_file).to match /-\n  key: xxxxxxxxx.jpg\n  path: .*\n  metadata: {\"original_name\":\"test1.jpg\"}\n/
+        expect(metadata_file).to match /-\n  key: xxxxxxxxx.jpg\n  metadata: {\"original_name\":\"test1.jpg\"}\n/
       end
     end
 
