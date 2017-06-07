@@ -18,12 +18,12 @@ RSpec.describe Bubbles::BubbliciousFile do
     end
   end
 
-  describe '#move_to_processing_dir' do
-    def trigger; subject.move_to_processing_dir end
+  describe '#copy_to_processing_dir' do
+    def trigger; subject.copy_to_processing_dir end
 
-    it 'moves file to processing dir with uuid name' do
+    it 'copy file to processing dir with uuid name' do
       expect(FileUtils)
-        .to receive(:mv)
+        .to receive(:cp)
         .once
         .with(Pathname.new(file), expected_uid_file_path)
       trigger
@@ -48,6 +48,10 @@ RSpec.describe Bubbles::BubbliciousFile do
         .to receive(:rm)
         .once
         .with(expected_uid_file_path)
+      expect(FileUtils)
+        .to receive(:rm)
+        .once
+        .with(Pathname.new(file))
       trigger
     end
   end

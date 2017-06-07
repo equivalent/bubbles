@@ -7,14 +7,16 @@ module Bubbles
       @config = config
     end
 
-    def move_to_processing_dir
-      config.logger.debug("BubbliciousFile: moving file #{file} to #{uid_file}")
-      FileUtils.mv(file, uid_file)
+    def copy_to_processing_dir
+      config.logger.debug("BubbliciousFile: copy file #{file} to #{uid_file}")
+      FileUtils.cp(file, uid_file)
     end
 
     def remove_file
       config.logger.debug("BubbliciousFile: removing file #{uid_file}")
       FileUtils.rm(uid_file)
+      config.logger.debug("BubbliciousFile: removing file #{file}")
+      FileUtils.rm(file)
     end
 
     def metadata

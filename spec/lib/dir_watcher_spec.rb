@@ -45,7 +45,7 @@ RSpec.describe Bubbles::DirWatcher do
         .with(file: TestHelpers.dummy_file_test2, config: config)
         .and_return(bfile_double)
       expect(bfile_double)
-        .to receive(:move_to_processing_dir)
+        .to receive(:copy_to_processing_dir)
         .with(no_args)
 
       expect(bfile_double)

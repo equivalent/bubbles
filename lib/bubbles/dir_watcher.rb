@@ -16,7 +16,7 @@ module Bubbles
         .last(num_of_files_to_schedule)
         .each do |file|
           bfile = BubbliciousFile.new(file: file, config: config)
-          bfile.move_to_processing_dir
+          bfile.copy_to_processing_dir
 
           uploader_classes.each do |uploader_class|
             command_queue << uploader_class.new(bfile: bfile, command_queue: command_queue, config: config)
