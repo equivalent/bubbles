@@ -6,7 +6,7 @@ describe 'full cycle' do
       c.log_level = TestHelpers.log_level
       c.source_dir = TestHelpers.dummy_temporary_source_dir
       c.processing_dir = TestHelpers.dummy_processing_dir
-      c.uploader_classes = [Bubbles::Uploaders::S3, Bubbles::Uploaders::LocalDir]
+      c.uploader_classes = [Bubbles::Uploaders::S3EnsureConnection, Bubbles::Uploaders::S3, Bubbles::Uploaders::LocalDir]
       c.local_dir_uploader_path = TestHelpers.dummy_local_dir_uploader_dir
       c.local_dir_metadata_file_path = TestHelpers.dummy_local_dir_metadata_file_path
       c.s3_region = 'eu-west-1'
@@ -36,6 +36,7 @@ describe 'full cycle' do
     command_queue.call_next
 
     expect(command_queue.queue).to match_array([
+      be_kind_of(Bubbles::Uploaders::S3EnsureConnection),
       be_kind_of(Bubbles::Uploaders::S3),
       be_kind_of(Bubbles::Uploaders::LocalDir),
       be_kind_of(Method), # this is instance of BubbliciousFile.public_method(:remove)
@@ -43,6 +44,19 @@ describe 'full cycle' do
     ])
     expect_that_file_exists_in_processing_dir
     expect_that_local_dir_uploader_dir_is_empty
+
+    expect_ping_bucket
+    command_queue.call_next
+
+    expect(command_queue.queue).to match_array([
+      be_kind_of(Bubbles::Uploaders::S3),
+      be_kind_of(Bubbles::Uploaders::LocalDir),
+      be_kind_of(Method), # this is instance of BubbliciousFile.public_method(:remove)
+      dir_watcher,
+    ])
+    expect_that_file_exists_in_processing_dir
+    expect_that_local_dir_uploader_dir_is_empty
+
 
     expect_upload_to_s3
     command_queue.call_next
@@ -70,6 +84,17 @@ describe 'full cycle' do
     ])
     expect_that_processing_dir_is_empty
     expect_that_file_exists_in_local_dir_uploader_dir
+  end
+
+  def expect_ping_bucket
+    s3_double = instance_double(Aws::S3::Client)
+    expect(Aws::S3::Client)
+      .to receive(:new)
+      .with({region: 'eu-west-1', credentials: config.s3_credentials })
+      .and_return(s3_double)
+
+    expect(s3_double)
+      .to receive(:list_buckets)
   end
 
   def expect_upload_to_s3

@@ -13,6 +13,7 @@ require "bubbles/bubblicious_file"
 require "bubbles/dir_watcher"
 require 'bubbles/common_uploader_interface'
 require "bubbles/uploaders/s3"
+require "bubbles/uploaders/s3_ensure_connection"
 require "bubbles/uploaders/local_dir"
 
 module Bubbles
