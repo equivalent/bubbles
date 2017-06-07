@@ -67,6 +67,7 @@ sleep_interval: 1                                  # sleep between next command
 num_of_files_to_schedule: 1                        # how many files schedule for processing at the same time
 
 uploaders:
+  - 'Bubbles::Uploaders::S3EnsureConnection'       # this will check if s3 connection can be established
   - 'Bubbles::Uploaders::S3'                       # by default only S3 uploader is used
   - 'Bubbles::Uploaders::LocalDir'
 
